@@ -1,4 +1,5 @@
 const {Model, DataTypes, Sequelize} = require('sequelize')
+const path = require("path")
 const connectionSettings = {
     test: {dialect: 'sqlite', storage: 'sqlite::memory:'},
     dev: {dialect: 'sqlite', storage: path.join(__dirname, 'banking.db')},

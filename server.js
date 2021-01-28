@@ -1,6 +1,5 @@
 const express = require("express")
 const app = express()
-const path = require("path")
 const {Account, Friend, sequelize} = require("./model")
 const Handlebars = require('handlebars')
 const expressHandlebars = require("express-handlebars")
