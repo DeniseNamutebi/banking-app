@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const path = require("path")
 const {Account, Friend, sequelize} = require("./model")
 const Handlebars = require('handlebars')
 const expressHandlebars = require("express-handlebars")
@@ -42,7 +43,7 @@ app.get("/profile", requiresAuth(), (req, res) => {
 
 
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
     sequelize.sync()
-    .then(console.log("Server is ready"))
+    .then(console.log("Server running on PORT", process.env.PORT))
 })

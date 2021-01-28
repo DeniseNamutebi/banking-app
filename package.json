@@ -1,6 +1,12 @@
 {
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "watch": "NODE_ENV=dev PORT=3000 nodemon server.js",
+    "test": "PORT=3001 "
+  },
+  "engines": {
+    "node": "14",
+    "npm": "6"
   },
   "name": "banking-app",
   "version": "1.0.0",
@@ -16,6 +22,7 @@
     "express-openid-connect": "^2.2.1",
     "handlebars": "^4.7.6",
     "nodemon": "^2.0.7",
+    "pg": "^8.5.1",
     "sequelize": "^6.5.0",
     "sqlite3": "^5.0.1"
   }
