@@ -11,10 +11,10 @@ if(process.env.NODE_ENV !== "production"){
   require('dotenv').config()
 }
 
-const config = {
+const openIDconfig = {
   authRequired: false,
   auth0Logout: true,
-  secret: 'a long, randomly-generated string stored in env',
+  secret: process.env.AUTH0_CLIENT_SECRET,
   baseURL: 'http://localhost:3000',
   clientID: process.env.AUTH0_CLIENT_ID,
   issuerBaseURL: process.env.AUTH0_DOMAIN
@@ -25,21 +25,20 @@ const handlebars = expressHandlebars({
 })
 
 app.use(express.json())
-app.use(auth(config))
+app.use(auth(openIDconfig))
 app.use(express.static('public'))
 app.engine('handlebars', handlebars)
 app.set('view engine', 'handlebars')
 
 
 app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+    req.oidc.isAuthenticated() ? res.redirect("/profile") : res.redirect("/login")
 });
 
 app.get("/profile", requiresAuth(), (req, res) => {
    const person = req.oidc.user
     res.render("profile", { person });
   });
-
 
 
 app.listen(process.env.PORT, () => {
