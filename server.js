@@ -33,7 +33,8 @@ app.set('view engine', 'handlebars')
 
 
 app.get('/', (req, res) => {
-    req.oidc.isAuthenticated() ? res.redirect("/profile") : res.redirect("/login")
+   // req.oidc.isAuthenticated() ? res.redirect("/profile") : res.redirect("/login")
+   res.send("request is authenticated")
 });
 
 app.get("/profile", requiresAuth(), (req, res) => {
@@ -48,7 +49,7 @@ app.post('/friends/invite', requiresAuth(), (req, res) => {
   res.sendStatus(201)
 })
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
     sequelize.sync()
     .then(console.log("Server running on PORT", process.env.PORT))
 })
