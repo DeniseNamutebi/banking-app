@@ -6,8 +6,9 @@ if (process.env.NODE_ENV !== "production") {
 class Mailer {
 static sent = []
 
-    constructor(from) {
-        this.from = from
+    constructor(user) {
+        this.from = user.email
+        this.sub = user.sub
         this.transport = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -22,7 +23,7 @@ static sent = []
             from: this.from,
             to: to,
             subject: "Friend request",
-            html: `Hi there,<br/><br/>I would like to invite you to be my friend<br/><br/><a style="text-decoration:none;padding:15px;background-color:green;color:white;border-radius:3px;" href="${process.env.BASE_URL}/friends/request?from=${encodeURIComponent(this.from)}&to=${encodeURIComponent(to)}">Accept Request</a>`,
+            html: `Hi there,<br/><br/>I would like to invite you to be my friend<br/><br/><a style="text-decoration:none;padding:15px;background-color:green;color:white;border-radius:3px;" href="${process.env.BASE_URL}/friends/request?sub=${encodeURIComponent(this.sub)}&to=${encodeURIComponent(to)}">Accept Request</a>`,
             replyto: 'no-reply@banking-app.com'
         }
         this.transport.sendMail(email, (err, result) => {

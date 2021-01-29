@@ -34,30 +34,29 @@ app.use(express.urlencoded())
 
 
 app.get('/', (req, res) => {
-  // req.oidc.isAuthenticated() ? res.redirect("/profile") : res.redirect("/login")
-  res.send("request is authenticated")
+  req.oidc.isAuthenticated() ? res.redirect("/profile") : res.redirect("/login")
 });
 
 app.get("/profile", requiresAuth(), (req, res) => {
   const person = req.oidc.user
-  res.render("profile", { person });
+  const friends = Friend.findAll({where:{sub:req.oidc.user.sub}})
+  res.render("profile", { person, friends });
 });
 
 app.get("/friends/request", (req, res) => {
-  const {invited, invitee} = req.query
-  res.render('invite-friend', {invited, invitee})
+  console.log(req.query)
+  const {sub, to} = req.query
+  res.render('invite-friend', {sub, to})
 })
 
-app.post('/friends/request/accepted', (req, res) => {
-  const {invited, invitee, url} = req.body
-  // Ready to create a friend with the following data:
-  console.log({invited, invitee, url})
+app.post('/friends/request/accepted', async (req, res) => {
+  const friend = await Friend.create(req.body)
   res.redirect('/')
 })
 
 app.post('/friends/invite', requiresAuth(), (req, res) => {
   const email = req.body.email
-  const mailer = new Mailer(req.oidc.user.email)
+  const mailer = new Mailer(req.oidc.user)
   mailer.sendEmailInvite(email)
   res.redirect('/')
 })
