@@ -15,7 +15,7 @@ const openIDconfig = {
   authRequired: false,
   auth0Logout: true,
   secret: process.env.AUTH0_CLIENT_SECRET,
-  baseURL: 'http://localhost:3000',
+  baseURL: process.env.BASE_URL,
   clientID: process.env.AUTH0_CLIENT_ID,
   issuerBaseURL: process.env.AUTH0_DOMAIN
 };
@@ -32,7 +32,8 @@ app.set('view engine', 'handlebars')
 
 
 app.get('/', (req, res) => {
-    req.oidc.isAuthenticated() ? res.redirect("/profile") : res.redirect("/login")
+   // req.oidc.isAuthenticated() ? res.redirect("/profile") : res.redirect("/login")
+   res.send("request is authenticated")
 });
 
 app.get("/profile", requiresAuth(), (req, res) => {
@@ -41,7 +42,7 @@ app.get("/profile", requiresAuth(), (req, res) => {
   });
 
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
     sequelize.sync()
     .then(console.log("Server running on PORT", process.env.PORT))
 })
