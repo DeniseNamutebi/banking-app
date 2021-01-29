@@ -3,9 +3,15 @@ const app = express()
 const { Account, Friend, sequelize } = require("./model")
 const Handlebars = require('handlebars')
 const expressHandlebars = require("express-handlebars")
+<<<<<<< HEAD
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const { auth } = require('express-openid-connect')
 const { requiresAuth } = require('express-openid-connect')
+=======
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
+const { auth, requiresAuth } = require('express-openid-connect')
+const Mailer = require('./mailer')
+>>>>>>> origin
 
 if (process.env.NODE_ENV !== "production") {
   require('dotenv').config()
@@ -25,6 +31,7 @@ const handlebars = expressHandlebars({
 })
 
 app.use(express.json())
+app.use(express.urlencoded())
 app.use(auth(openIDconfig))
 app.use(express.static('public'))
 app.engine('handlebars', handlebars)
@@ -51,6 +58,13 @@ app.post('/friends/request/accepted', (req, res) => {
   const {invited, invitee, url} = req.body
   // Ready to create a friend with the following data:
   console.log({invited, invitee, url})
+  res.redirect('/')
+})
+
+app.post('/friends/invite', requiresAuth(), (req, res) => {
+  const email = req.body.email
+  const mailer = new Mailer(req.oidc.user.email)
+  mailer.sendEmailInvite(email)
   res.redirect('/')
 })
 
