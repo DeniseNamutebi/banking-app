@@ -1,11 +1,21 @@
-Hello {{person.name}}
-
-<form id="invite" action="/friends/invite" method="POST"> 
-    <label for="email"> Enter Friend's Email:</label>
-    <input type="email" id="email" name="email">
-    <button type="submit" value="submit">Submit </button>
-</form>
-
-<section>
+<div class="page-container">
+  <div class="profile">
+    <h1>hello {{person.name}}</h1>
+    <img class="profile-picture" src="{{person.picture}}" width="60px" height="60px">
+     </div>
+  <div class="money">
+    <div class="balance">
+       <h3>ACCOUNT BALANCE: </h3>
+    </div>  
+      <h3>INVITE A FRIEND</h3>
+      <p>Just enter in their email below to send them an invite!</p>
+      <form id="invite" action="/friends/invite"      method="POST"> 
+          <label for="email"> Enter Friend's Email:</label>
+          <input type="email" id="email" name="email">
+          <button type="submit" value="submit">Submit</button>
+      </form>
+      <section>
     Number of friends: {{friends.length}}
-</section>
+      </section> 
+    </div>
+</div>
