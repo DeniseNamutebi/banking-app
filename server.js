@@ -3,15 +3,9 @@ const app = express()
 const { Account, Friend, sequelize } = require("./model")
 const Handlebars = require('handlebars')
 const expressHandlebars = require("express-handlebars")
-<<<<<<< HEAD
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
-const { auth } = require('express-openid-connect')
-const { requiresAuth } = require('express-openid-connect')
-=======
-const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const { auth, requiresAuth } = require('express-openid-connect')
 const Mailer = require('./mailer')
->>>>>>> origin
 
 if (process.env.NODE_ENV !== "production") {
   require('dotenv').config()
