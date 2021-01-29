@@ -34,8 +34,7 @@ app.use(express.urlencoded())
 
 
 app.get('/', (req, res) => {
-  // req.oidc.isAuthenticated() ? res.redirect("/profile") : res.redirect("/login")
-  res.send("request is authenticated")
+  req.oidc.isAuthenticated() ? res.redirect("/profile") : res.redirect("/login")
 });
 
 app.get("/profile", requiresAuth(), (req, res) => {
@@ -57,7 +56,7 @@ app.post('/friends/request/accepted', (req, res) => {
 
 app.post('/friends/invite', requiresAuth(), (req, res) => {
   const email = req.body.email
-  const mailer = new Mailer(req.oidc.user.email)
+  const mailer = new Mailer(req.oidc.user.email, req.oidc.user.sub)
   mailer.sendEmailInvite(email)
   res.redirect('/')
 })
