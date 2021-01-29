@@ -22,7 +22,7 @@ static sent = []
             from: this.from,
             to: to,
             subject: "Friend request",
-            html: 'Hi there,<br/><br/>I would like to invite you to be my friend<br/><br/><a style="text-decoration:none;padding:15px;background-color:green;color:white;border-radius:3px;" href="$(process.env.BASE_URL)/friends/accept?from=$(encodeURIComponent(from))&to=$(encodeURIComponent(to))">Accept Request</a>',
+            html: `Hi there,<br/><br/>I would like to invite you to be my friend<br/><br/><a style="text-decoration:none;padding:15px;background-color:green;color:white;border-radius:3px;" href="${process.env.BASE_URL}/friends/accept?from=${encodeURIComponent(this.from)}&to=${encodeURIComponent(to)}">Accept Request</a>`,
             replyto: 'no-reply@banking-app.com'
         }
         this.transport.sendMail(email, (err, result) => {
@@ -30,3 +30,5 @@ static sent = []
         })
     }
 }
+
+module.exports = Mailer
