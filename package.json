@@ -1,9 +1,7 @@
 {
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js",
-    "test": "PORT=3001 jest --watchAll",
-    "test:cypress": "PORT=3001 cypress open"
+    "dev": "node server.js"
   },
   "engines": {
     "node": "14",
@@ -11,7 +9,7 @@
   },
   "name": "banking-app",
   "version": "1.0.0",
-  "main": "model.js",
+  "main": "server.js",
   "author": "",
   "license": "ISC",
   "description": "",
